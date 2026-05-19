@@ -5,53 +5,395 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Therapists - Massage Inc Rosebank</title>
     <style>
-        :root { --primary: #c41e5c; --gold: #d4af37; --dark: #0f0f0f; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; margin:0; background:var(--dark); color:#e8d5d5; line-height:1.7; }
-        nav { background: rgba(15,15,15,0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
-        nav ul { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; }
-        nav a { color: white; text-decoration: none; padding: 20px 30px; display: block; font-weight: 500; }
-        nav a:hover { color: var(--gold); background: rgba(196,30,92,0.2); }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        h1 { text-align:center; color:var(--gold); margin:60px 0 20px; font-size:2.8rem; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 40px 0;
+        :root {
+            --primary: #c41e5c;
+            --gold: #d4af37;
+            --dark: #0f0f0f;
+            --card-bg: #1a0f12;
+            --text-light: #e8d5d5;
+            --text-muted: #b8a8a8;
         }
-        .card {
-            background: #1a0f12;
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.4s;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(196,30,92,0.3); }
-        .card img {
-            width: 100%;
-            height: 380px;
-            object-fit: cover;
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #16070b 100%);
+            color: var(--text-light);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-        .info {
-            padding: 20px;
+
+        /* Navigation */
+        nav {
+            background: rgba(15, 15, 15, 0.98);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+            border-bottom: 1px solid rgba(196, 30, 92, 0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav li {
+            flex: 1;
+            min-width: 120px;
             text-align: center;
         }
-        .info h3 { margin: 0 0 8px; color: white; }
-        .info p { margin: 5px 0; color: #ccc; }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 18px 24px;
+            display: block;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+            background: rgba(196, 30, 92, 0.15);
+            border-bottom-color: var(--gold);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            background: linear-gradient(180deg, rgba(196, 30, 92, 0.1) 0%, transparent 100%);
+            border-bottom: 1px solid rgba(196, 30, 92, 0.2);
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            color: var(--gold);
+            font-size: clamp(2rem, 8vw, 3.2rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-weight: 300;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            padding: 40px 0;
+            animation: fadeIn 1s ease 0.4s both;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(196, 30, 92, 0.1);
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(196, 30, 92, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-16px) scale(1.02);
+            box-shadow: 0 40px 80px rgba(196, 30, 92, 0.4),
+                        0 0 40px rgba(212, 175, 55, 0.15);
+            border-color: rgba(196, 30, 92, 0.3);
+        }
+
+        /* Card Image */
+        .card-image {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2a1820 0%, #1a0f12 100%);
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.08);
+        }
+
+        .card-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(15, 15, 15, 0.4) 100%);
+            z-index: 1;
+        }
+
+        /* Card Info */
+        .card-info {
+            padding: 28px 24px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--card-bg) 0%, rgba(26, 15, 18, 0.8) 100%);
+            position: relative;
+            z-index: 3;
+        }
+
+        .card-info h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .card-info .details {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+            font-weight: 300;
+        }
+
+        .card-info .description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            font-style: italic;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        /* Button */
         .btn {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, #9d1843 100%);
             color: white;
-            padding: 12px 28px;
+            padding: 13px 36px;
             border-radius: 50px;
             text-decoration: none;
             display: inline-block;
-            margin-top: 12px;
             font-weight: 600;
+            font-size: 0.95rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.4s ease;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(196, 30, 92, 0.3);
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #9d1843 0%, var(--primary) 100%);
+            box-shadow: 0 8px 25px rgba(196, 30, 92, 0.5),
+                        0 0 20px rgba(212, 175, 55, 0.2);
+            transform: translateY(-2px);
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        /* Footer */
+        .footer-contact {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid rgba(196, 30, 92, 0.2);
+            margin-top: 80px;
+            background: linear-gradient(180deg, transparent 0%, rgba(196, 30, 92, 0.05) 100%);
+        }
+
+        .footer-contact p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .footer-contact strong {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .contact-link {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .contact-link:hover {
+            background: rgba(212, 175, 55, 0.15);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Typography */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .hero {
+                padding: 60px 20px 40px;
+                margin-bottom: 40px;
+            }
+
+            .card-image {
+                height: 350px;
+            }
+
+            .card-info {
+                padding: 24px 20px;
+            }
+
+            nav ul {
+                gap: 0;
+            }
+
+            nav a {
+                padding: 16px 16px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .hero {
+                padding: 40px 15px 30px;
+                margin-bottom: 30px;
+            }
+
+            .card-image {
+                height: 300px;
+            }
+
+            .card-info h3 {
+                font-size: 1.25rem;
+            }
+
+            nav a {
+                padding: 14px 12px;
+                font-size: 0.8rem;
+            }
+
+            .footer-contact {
+                padding: 40px 15px;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
 <body>
 
+<!-- Navigation -->
 <nav>
     <ul>
         <li><a href="../index.html">Home</a></li>
@@ -62,39 +404,103 @@
     </ul>
 </nav>
 
-<div class="container">
-    <h1>Our Independent Therapists</h1>
-    <p style="text-align:center; font-size:1.2rem; max-width:700px; margin:0 auto 40px;">
-        All ladies are 100% independent contractors. View their private profiles below.
-    </p>
+<!-- Hero Section -->
+<div class="hero">
+    <div class="container">
+        <h1>Our Independent Therapists</h1>
+        <p class="hero-subtitle">Discover our exclusive roster of premium independent contractors. Each therapist brings unique expertise and elegance to their craft.</p>
+    </div>
+</div>
 
+<!-- Main Content -->
+<div class="container">
+    <!-- Therapists Grid -->
     <div class="grid">
-        <!-- Example Card 1 -->
+        <!-- Therapist Card 1 -->
         <div class="card">
-            <img src="https://via.placeholder.com/600x800/1a0f12/d4af37?text=Nora" alt="Nora">
-            <div class="info">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/600x800/1a0f12/d4af37?text=Nora" alt="Nora - Premium Therapist">
+            </div>
+            <div class="card-info">
                 <h3>Nora</h3>
-                <p>28 • Linksfield • Sexy Curvy</p>
+                <div class="details">28 • Linksfield</div>
+                <div class="description">Sexy & Curvy</div>
                 <a href="nora.html" class="btn">View Full Profile</a>
             </div>
         </div>
 
-        <!-- Add more cards here -->
+        <!-- Therapist Card 2 -->
         <div class="card">
-            <img src="https://via.placeholder.com/600x800/1a0f12/d4af37?text=Sophia" alt="Sophia">
-            <div class="info">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/600x800/1a0f12/d4af37?text=Sophia" alt="Sophia - Premium Therapist">
+            </div>
+            <div class="card-info">
                 <h3>Sophia</h3>
-                <p>26 • Rosebank • Petite &amp; Elegant</p>
+                <div class="details">26 • Rosebank</div>
+                <div class="description">Petite & Elegant</div>
                 <a href="sophia.html" class="btn">View Full Profile</a>
             </div>
         </div>
 
-        <!-- Duplicate cards as needed -->
+        <!-- Therapist Card 3 -->
+        <div class="card">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/600x800/1a0f12/d4af37?text=Aurora" alt="Aurora - Premium Therapist">
+            </div>
+            <div class="card-info">
+                <h3>Aurora</h3>
+                <div class="details">29 • Johannesburg</div>
+                <div class="description">Athletic & Sensual</div>
+                <a href="aurora.html" class="btn">View Full Profile</a>
+            </div>
+        </div>
+
+        <!-- Therapist Card 4 -->
+        <div class="card">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/600x800/1a0f12/d4af37?text=Isabella" alt="Isabella - Premium Therapist">
+            </div>
+            <div class="card-info">
+                <h3>Isabella</h3>
+                <div class="details">27 • Sandton</div>
+                <div class="description">Exotic & Mysterious</div>
+                <a href="isabella.html" class="btn">View Full Profile</a>
+            </div>
+        </div>
+
+        <!-- Therapist Card 5 -->
+        <div class="card">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/600x800/1a0f12/d4af37?text=Victoria" alt="Victoria - Premium Therapist">
+            </div>
+            <div class="card-info">
+                <h3>Victoria</h3>
+                <div class="details">25 • Rosebank</div>
+                <div class="description">Playful & Charming</div>
+                <a href="victoria.html" class="btn">View Full Profile</a>
+            </div>
+        </div>
+
+        <!-- Therapist Card 6 -->
+        <div class="card">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/600x800/1a0f12/d4af37?text=Jasmine" alt="Jasmine - Premium Therapist">
+            </div>
+            <div class="card-info">
+                <h3>Jasmine</h3>
+                <div class="details">30 • Linksfield</div>
+                <div class="description">Sophisticated & Luxe</div>
+                <a href="jasmine.html" class="btn">View Full Profile</a>
+            </div>
+        </div>
     </div>
 
-    <p style="text-align:center; margin-top:60px; font-size:1.1rem;">
-        Contact <strong>Shelley</strong> on <a href="tel:0751667642" style="color:var(--gold);">075 166 7642</a> for current availability and matching.
-    </p>
+    <!-- Footer Contact Section -->
+    <div class="footer-contact">
+        <p>For current availability and personalized matching, contact:</p>
+        <p><strong>Shelley</strong></p>
+        <a href="tel:0751667642" class="contact-link">075 166 7642</a>
+    </div>
 </div>
 
 </body>
